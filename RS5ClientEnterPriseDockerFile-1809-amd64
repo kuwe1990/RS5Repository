@@ -7,8 +7,6 @@ RUN echo %CONFIGURL% > configUrl
 RUN reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v UBR > runTimeUBR
 RUN reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v CurrentBuild > runTimeVersion
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
-# Retrieve .NET Core SDK
-ENV ASPNETCORE_VERSION 2.2.5
 # Parse hex Version & UBR from file.
 RUN ([regex]::match($(Get-Content -Path runTimeUBR), '0[xX][0-9a-fA-F]+')).Value > realRunTime
 RUN ([regex]::match($(Get-Content -Path runTimeVersion), '\b\d{5}\b')).Value > realRunTimeVersion
